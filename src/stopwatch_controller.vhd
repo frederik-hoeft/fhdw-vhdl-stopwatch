@@ -96,9 +96,9 @@ begin
     process (loc_state)
     begin
         if (loc_state = "101") then
-            ctr_clear <= '1'
+            ctr_clear <= '1';
         else
-            ctr_clear <= '0'
+            ctr_clear <= '0';
         end if;
         if (loc_state = "001") or (loc_state = "010") then
             ctr_enable <= '1';
