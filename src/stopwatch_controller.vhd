@@ -20,9 +20,9 @@ architecture Behavioral of stopwatch_controller is
 -- 011: "stop" <=> 00, 00 => 100, 10|11|01 => 011
 -- 100: "stopped" <=> 00, 00 => 100, 01 => 101, 1- => 001
 -- 101: "reset" <=> 01, 00 => 000, 01|11|10 => 101
-signal _state: std_logic_vector(2 downto 0); -- current state
-signal _toggle: std_logic; -- local snapshot of btn_toggle
-signal _reset: std_logic; -- local snapshot of btn_reset
+signal loc_state: std_logic_vector(2 downto 0); -- current state
+signal loc_toggle: std_logic; -- local snapshot of btn_toggle
+signal loc_reset: std_logic; -- local snapshot of btn_reset
 
 begin
     -- state transition logic
@@ -32,69 +32,69 @@ begin
         if rising_edge(clk) then
             -- reset state machine if sys_reset is active (low)
             if (sys_reset = '0') then
-                _state <= "000";
+                loc_state <= "000";
                 return;
             end if;
             -- update local snapshots of btn_toggle and btn_reset
-            _toggle <= btn_toggle;
-            _reset <= btn_reset;
+            loc_toggle <= btn_toggle;
+            loc_reset <= btn_reset;
             -- whatever VHDL version we're using doesn't seem to support VHDL-2008 syntax...
             -- so when-else (kinda like C# switch expressions) doesn't seem to work :P
-            case _state is
+            case loc_state is
                 -- 000: "zero" <=> 00, 0- => 000, 1- => 001
                 when "000" =>
-                    if (_toggle = '1') then
-                        _state <= "001";
+                    if (loc_toggle = '1') then
+                        loc_state <= "001";
                     else
-                        _state <= "000";
+                        loc_state <= "000";
                     end if;
                 -- 001: "start" <=> 10, 00 => 010, 10|11|01 => 001
                 when "001" =>
-                    if (_toggle = '0') and (_reset = '0') then
-                        _state <= "010";
+                    if (loc_toggle = '0') and (loc_reset = '0') then
+                        loc_state <= "010";
                     else
-                        _state <= "001";
+                        loc_state <= "001";
                     end if;
                 -- 010: "running" <=> 10, 0- => 010, 1- => 011
                 when "010" =>
-                    if (_toggle = '1') then
-                        _state <= "011";
+                    if (loc_toggle = '1') then
+                        loc_state <= "011";
                     else
-                        _state <= "010";
+                        loc_state <= "010";
                     end if;
                 -- 011: "stop" <=> 00, 00 => 100, 10|11|01 => 011
                 when "011" =>
-                    if (_toggle = '0') and (_reset = '0') then
-                        _state <= "100";
+                    if (loc_toggle = '0') and (loc_reset = '0') then
+                        loc_state <= "100";
                     else
-                        _state <= "011";
+                        loc_state <= "011";
                     end if;
                 -- 100: "stopped" <=> 00, 00 => 100, 01 => 101, 1- => 001
                 when "100" =>
-                    if (_toggle = '1') then
-                        _state <= "001";
-                    elsif (_reset = '1') then
-                        _state <= "101";
+                    if (loc_toggle = '1') then
+                        loc_state <= "001";
+                    elsif (loc_reset = '1') then
+                        loc_state <= "101";
                     else
-                        _state <= "100";
+                        loc_state <= "100";
                     end if;
                 -- 101: "reset" <=> 01, 00 => 000, 01|11|10 => 101
                 when "101" =>
-                    if (_reset = '0') and (_toggle = '0') then
-                        _state <= "000";
+                    if (loc_reset = '0') and (loc_toggle = '0') then
+                        loc_state <= "000";
                     else
-                        _state <= "101";
+                        loc_state <= "101";
                     end if;
             end case;
         end if;
     end process;
 
     -- output logic
-    -- triggered when _state changes (I think)
-    process (_state)
+    -- triggered when loc_state changes (I think)
+    process (loc_state)
     begin
-        ctr_clear <= (_state = "101");
-        ctr_enable <= (_state = "001") or (_state = "010");
+        ctr_clear <= (loc_state = "101");
+        ctr_enable <= (loc_state = "001") or (loc_state = "010");
     end process;
     
 end Behavioral;
