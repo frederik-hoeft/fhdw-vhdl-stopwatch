@@ -1,0 +1,3 @@
+xst -intstyle ise -ifn "/home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller.xst" -ofn "/home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -i -p xa3s500e-cpg132-4 stopwatch_controller.ngc stopwatch_controller.ngd  
+map -intstyle ise -p xa3s500e-cpg132-4 -cm area -ir off -pr off -c 100 -o stopwatch_controller_map.ncd stopwatch_controller.ngd stopwatch_controller.pcf 

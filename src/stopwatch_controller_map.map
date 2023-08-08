@@ -1,0 +1,21 @@
+Release 14.7 Map P.20131013 (lin64)
+Xilinx Map Application Log File for Design 'stopwatch_controller'
+
+Design Information
+------------------
+Command Line   : map -intstyle ise -p xa3s500e-cpg132-4 -cm area -ir off -pr off
+-c 100 -o stopwatch_controller_map.ncd stopwatch_controller.ngd
+stopwatch_controller.pcf 
+Target Device  : xa3s500e
+Target Package : cpg132
+Target Speed   : -4
+Mapper Version : aspartan3e -- $Revision: 1.55 $
+Mapped Date    : Tue Aug  8 16:30:25 2023
+
+ERROR:Map:116 - The design is empty.  No processing will be done.
+ERROR:Map:52 - Problem encountered processing RPMs. 
+
+Design Summary
+--------------
+Number of errors   :   2
+Number of warnings :   0
