@@ -95,7 +95,9 @@ begin
     -- triggered when loc_state changes (I think)
     process (loc_state)
     begin
-        ctr_clear <= (loc_state = "101");
+        with loc_state select ctr_clear <=
+            '1' when "101",
+            '0' when others;
         ctr_enable <= (loc_state = "001") or (loc_state = "010");
     end process;
     
