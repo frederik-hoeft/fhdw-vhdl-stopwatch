@@ -34,60 +34,60 @@ begin
             if (sys_reset = '0') then
                 loc_state <= "000";
             else
-					-- update local snapshots of btn_toggle and btn_reset
-					loc_toggle <= btn_toggle;
-					loc_reset <= btn_reset;
-					-- whatever VHDL version we're using doesn't seem to support VHDL-2008 syntax...
-					-- so when-else (kinda like C# switch expressions) doesn't seem to work :P
-					case loc_state is
-						 -- 000: "zero" <=> 00, 0- => 000, 1- => 001
-						 when "000" =>
-							  if (loc_toggle = '1') then
-									loc_state <= "001";
-							  else
-									loc_state <= "000";
-							  end if;
-						 -- 001: "start" <=> 10, 00 => 010, 10|11|01 => 001
-						 when "001" =>
-							  if (loc_toggle = '0') and (loc_reset = '0') then
-									loc_state <= "010";
-							  else
-									loc_state <= "001";
-							  end if;
-						 -- 010: "running" <=> 10, 0- => 010, 1- => 011
-						 when "010" =>
-							  if (loc_toggle = '1') then
-									loc_state <= "011";
-							  else
-									loc_state <= "010";
-							  end if;
-						 -- 011: "stop" <=> 00, 00 => 100, 10|11|01 => 011
-						 when "011" =>
-							  if (loc_toggle = '0') and (loc_reset = '0') then
-									loc_state <= "100";
-							  else
-									loc_state <= "011";
-							  end if;
-						 -- 100: "stopped" <=> 00, 00 => 100, 01 => 101, 1- => 001
-						 when "100" =>
-							  if (loc_toggle = '1') then
-									loc_state <= "001";
-							  elsif (loc_reset = '1') then
-									loc_state <= "101";
-							  else
-									loc_state <= "100";
-							  end if;
-						 -- 101: "reset" <=> 01, 00 => 000, 01|11|10 => 101
-						 when "101" =>
-							  if (loc_reset = '0') and (loc_toggle = '0') then
-									loc_state <= "000";
-							  else
-									loc_state <= "101";
-							  end if;
-						 when others =>
-							  report "Invalid state" severity failure;
-					end case;
-				end if;
+                -- update local snapshots of btn_toggle and btn_reset
+                loc_toggle <= btn_toggle;
+                loc_reset <= btn_reset;
+                -- whatever VHDL version we're using doesn't seem to support VHDL-2008 syntax...
+                -- so when-else (basically C# switch expressions) won't work :P
+                case loc_state is
+                    -- 000: "zero" <=> 00, 0- => 000, 1- => 001
+                    when "000" =>
+                        if (loc_toggle = '1') then
+                            loc_state <= "001";
+                        else
+                            loc_state <= "000";
+                        end if;
+                    -- 001: "start" <=> 10, 00 => 010, 10|11|01 => 001
+                    when "001" =>
+                        if (loc_toggle = '0') and (loc_reset = '0') then
+                            loc_state <= "010";
+                        else
+                            loc_state <= "001";
+                        end if;
+                    -- 010: "running" <=> 10, 0- => 010, 1- => 011
+                    when "010" =>
+                        if (loc_toggle = '1') then
+                            loc_state <= "011";
+                        else
+                            loc_state <= "010";
+                        end if;
+                    -- 011: "stop" <=> 00, 00 => 100, 10|11|01 => 011
+                    when "011" =>
+                        if (loc_toggle = '0') and (loc_reset = '0') then
+                            loc_state <= "100";
+                        else
+                            loc_state <= "011";
+                        end if;
+                    -- 100: "stopped" <=> 00, 00 => 100, 01 => 101, 1- => 001
+                    when "100" =>
+                        if (loc_toggle = '1') then
+                            loc_state <= "001";
+                        elsif (loc_reset = '1') then
+                            loc_state <= "101";
+                        else
+                            loc_state <= "100";
+                        end if;
+                    -- 101: "reset" <=> 01, 00 => 000, 01|11|10 => 101
+                    when "101" =>
+                        if (loc_reset = '0') and (loc_toggle = '0') then
+                            loc_state <= "000";
+                        else
+                            loc_state <= "101";
+                        end if;
+                    when others =>
+                        report "Invalid state" severity failure;
+                end case;
+            end if;
         end if;
     end process;
 
@@ -95,10 +95,16 @@ begin
     -- triggered when loc_state changes (I think)
     process (loc_state)
     begin
-        with loc_state select ctr_clear <=
-            '1' when "101",
-            '0' when others;
-        ctr_enable <= (loc_state = "001") or (loc_state = "010");
+        if (loc_state = "101") then
+            ctr_clear <= '1'
+        else
+            ctr_clear <= '0'
+        end if;
+        if (loc_state = "001") or (loc_state = "010") then
+            ctr_enable <= '1';
+        else 
+            ctr_enable <= '0';
+        end if;
     end process;
     
 end Behavioral;
