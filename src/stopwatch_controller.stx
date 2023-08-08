@@ -1,0 +1,40 @@
+Release 14.7 - xst P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> 
+Parameter TMPDIR set to /home/fred/xilinx/assignments/stopwatch/src/xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.03 secs
+ 
+--> 
+Parameter xsthdpdir set to /home/fred/xilinx/assignments/stopwatch/src/xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.03 secs
+ 
+--> 
+WARNING:Xst:3164 - Option "-debug" found multiple times in the command line. Only the first occurence is considered.
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "/home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller.vhd" in Library work.
+Entity <stopwatch_controller> compiled.
+ERROR:HDLParsers:800 - "/home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller.vhd" Line 97. Type of ctr_clear is incompatible with type of =.
+ERROR:HDLParsers:800 - "/home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller.vhd" Line 98. Type of ctr_enable is incompatible with type of or.
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.03 secs
+ 
+--> 
+
+
+Total memory usage is 458052 kilobytes
+
+Number of errors   :    2 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+
