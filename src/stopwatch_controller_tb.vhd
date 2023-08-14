@@ -92,7 +92,8 @@ begin
     return result;
 end std_logic2string;
 
-shared variable expected : STRING(1 DOWNTO 1);
+shared variable expected1 : STRING(1 DOWNTO 1);
+shared variable expected2 : STRING(1 DOWNTO 1);
 
 -- Testbench
 BEGIN
@@ -145,15 +146,17 @@ BEGIN
                 read(zeile, var1);
                 read(zeile, leerzeichen);
                 read(zeile, var2);
-                expected := var1;
+                expected1 := var1;
                 ASSERT string2std_logic(var1) = watch_running
                     REPORT "Vergleich fehlerhaft!" & "    Erwartungswert: " & var1 & "    Ergebnis: " & std_logic2string(watch_running)
                     SEVERITY WARNING;
-                expected := var2;
+                expected2 := var2;
                 ASSERT string2std_logic(var2) = watch_reset
                     REPORT "Vergleich fehlerhaft!" & "    Erwartungswert: " & var2 & "    Ergebnis: " & std_logic2string(watch_reset)
                     SEVERITY WARNING;
-        ELSE expected := (others => 'X');
+            ELSE 
+                expected1 := (others => 'X');
+                expected2 := (others => 'X');
             END IF;
         END IF;
     END IF;
@@ -177,8 +180,8 @@ BEGIN
             var1 := std_logic2string(btn_toggle);
             var2 := std_logic2string(btn_reset);
             var3 := std_logic2string(sys_reset);
-            var4 := std_logic2string(watch_reset);
-            var5 := std_logic2string(watch_running);
+            var4 := std_logic2string(watch_running);
+            var5 := std_logic2string(watch_reset);
             simulationszeit := NOW;
             write(zeile, "btn_toggle: " & var1);
             write(zeile, leerzeichen);
@@ -186,11 +189,13 @@ BEGIN
             write(zeile, leerzeichen);
             write(zeile, "sys_reset: " & var3);
             write(zeile, leerzeichen);
-            write(zeile, "watch_reset: " & var4);
+            write(zeile, "watch_running: " & var4);
             write(zeile, leerzeichen);
-            write(zeile, "watch_running: " & var5);
+            write(zeile, "watch_reset: " & var5);
             write(zeile, leerzeichen);
-            write(zeile, "Expected: " & expected);
+            write(zeile, "Expected watch_running: " & expected1);
+            write(zeile, leerzeichen);
+            write(zeile, "Expected watch_reset: " & expected2);
             write(zeile, leerzeichen);
             write(zeile, "Time: ");
             write(zeile, simulationszeit);

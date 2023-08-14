@@ -18,21 +18,21 @@ if (args.Length is 0 or > 1)
 
 string[] lines = File.ReadAllLines(args[0]);
 
-string outputFileName = args[0].Replace(".csv", string.Empty) + "-inputs.txt";
+string inputFileName = args[0].Replace(".csv", string.Empty) + "-inputs.txt";
+if (File.Exists(inputFileName))
+{
+    File.Delete(inputFileName);
+}
+using FileStream input = File.OpenWrite(inputFileName);
+using StreamWriter inputWriter = new(input);
+
+string outputFileName = args[0].Replace(".csv", string.Empty) + "-outputs.txt";
 if (File.Exists(outputFileName))
 {
     File.Delete(outputFileName);
 }
 using FileStream output = File.OpenWrite(outputFileName);
 using StreamWriter outputWriter = new(output);
-
-string outputFileName2 = args[0].Replace(".csv", string.Empty) + "-outputs.txt";
-if (File.Exists(outputFileName2))
-{
-    File.Delete(outputFileName2);
-}
-using FileStream output2 = File.OpenWrite(outputFileName2);
-using StreamWriter output2Writer = new(output2);
 
 // ignore the first line when copying the content to a txt file
 for (int i = 1; i < lines.Length; i++)
@@ -49,18 +49,25 @@ for (int i = 1; i < lines.Length; i++)
     List<string> inputWords = GetColumnsRegex().Split(inputs).ToList();
     // remove the first column of each line
     string processedInputWords = string.Join(' ', inputWords.Skip(1));
-    outputWriter.Write(processedInputWords);
-    if (i < lines.Length - 1)
+
+    inputWriter.Write(processedInputWords);
+    inputWriter.WriteLine();
+    if (i == lines.Length - 1)
     {
-        outputWriter.WriteLine();
+        inputWriter.Write(processedInputWords);
     }
 
     List<string> outputWords = GetColumnsRegex().Split(outputs).ToList();
     string processedOutputWords = string.Join(' ', outputWords);
-    output2Writer.Write(processedOutputWords);
+    if (i is 1)
+    {
+        outputWriter.Write(processedOutputWords);
+        outputWriter.WriteLine();
+    }
+    outputWriter.Write(processedOutputWords);
     if (i < lines.Length - 1)
     {
-        output2Writer.WriteLine();
+        outputWriter.WriteLine();
     }
 }
 
