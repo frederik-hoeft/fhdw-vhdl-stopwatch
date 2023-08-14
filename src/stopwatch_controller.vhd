@@ -88,14 +88,14 @@ begin
 
     -- output logic
     -- triggered when next_state changes (I think)
-    output: process (next_state)
+    output: process (state)
     begin
-        if (next_state = s_reset) then
+        if (state = s_reset) then
             watch_reset <= '1';
         else
             watch_reset <= '0';
         end if;
-        if (next_state = s_start) or (next_state = s_running) then
+        if (state = s_start) or (state = s_running) then
             watch_running <= '1';
         else 
             watch_running <= '0';
