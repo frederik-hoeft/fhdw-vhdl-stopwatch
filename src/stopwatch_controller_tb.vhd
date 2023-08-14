@@ -102,7 +102,7 @@ clk <= NOT clk AFTER 50 ns;
 UUT: stopwatch_controller PORT MAP(clk=>clk, btn_toggle=>btn_toggle(0), btn_reset=>btn_reset(0), sys_reset=>sys_reset(0), watch_reset=>watch_reset(0), watch_running=>watch_running(0));
 
 STIMULI: PROCESS(clk)
-    FILE testpattern: TEXT OPEN READ_MODE IS "stopwatch_controller_stimuli.txt";
+    FILE testpattern: TEXT OPEN READ_MODE IS "stopwatch_controller-inputs.txt";
     VARIABLE zeile: LINE;
     VARIABLE leerzeichen: CHARACTER;
     VARIABLE var1: STRING(1 DOWNTO 1);
@@ -131,7 +131,7 @@ BEGIN
 END PROCESS STIMULI;
 
 RESPONSE: PROCESS(clk)
-    FILE vergleichspattern: TEXT OPEN READ_MODE IS "stopwatch_controller_expected.txt";
+    FILE vergleichspattern: TEXT OPEN READ_MODE IS "stopwatch_controller-outputs.txt";
     VARIABLE zeile: LINE;
     VARIABLE leerzeichen: CHARACTER;
     VARIABLE var1: STRING(1 DOWNTO 1);
