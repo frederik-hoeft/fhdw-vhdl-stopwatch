@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.02 secs
+Total CPU time to Xst completion: 0.04 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.02 secs
+Total CPU time to Xst completion: 0.04 secs
  
 --> 
 Reading design: stopwatch_controller.prj
@@ -370,12 +370,12 @@ Delay:               7.071ns (Levels of Logic = 4)
 
 
 Total REAL time to Xst completion: 3.00 secs
-Total CPU time to Xst completion: 2.57 secs
+Total CPU time to Xst completion: 3.11 secs
  
 --> 
 
 
-Total memory usage is 499192 kilobytes
+Total memory usage is 499196 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    0 (   0 filtered)

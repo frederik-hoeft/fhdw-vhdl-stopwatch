@@ -363,7 +363,7 @@ static void work_a_2399475153_3212880686_p_2(char *t0)
     char *t12;
 
 LAB0:    xsi_set_current_line(93, ng0);
-    t1 = (t0 + 2152U);
+    t1 = (t0 + 1992U);
     t2 = *((char **)t1);
     t3 = *((unsigned char *)t2);
     t4 = (t3 == (unsigned char)5);
@@ -380,14 +380,14 @@ LAB4:    xsi_set_current_line(96, ng0);
     xsi_driver_first_trans_fast_port(t1);
 
 LAB3:    xsi_set_current_line(98, ng0);
-    t1 = (t0 + 2152U);
+    t1 = (t0 + 1992U);
     t2 = *((char **)t1);
     t4 = *((unsigned char *)t2);
     t9 = (t4 == (unsigned char)1);
     if (t9 == 1)
         goto LAB8;
 
-LAB9:    t1 = (t0 + 2152U);
+LAB9:    t1 = (t0 + 1992U);
     t5 = *((char **)t1);
     t10 = *((unsigned char *)t5);
     t11 = (t10 == (unsigned char)2);
