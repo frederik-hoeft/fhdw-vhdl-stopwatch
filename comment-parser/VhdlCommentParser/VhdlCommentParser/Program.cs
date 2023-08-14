@@ -66,12 +66,12 @@ for (int i = 1; i < lines.Length; i++)
 
 partial class Program
 {
-    [GeneratedRegex("(;|,)")]
+    [GeneratedRegex(";|,")]
     private static partial Regex GetColumnsRegex();
 }
 
 partial class Program
 {
-    [GeneratedRegex("(;;|,,)")]
+    [GeneratedRegex(";;|,,")]
     private static partial Regex GetEmptyColumnRegex();
 }
