@@ -6,105 +6,102 @@ entity stopwatch_controller is
            btn_toggle : in  STD_LOGIC; -- start/stop button for stopwatch, '1'-active
            btn_reset : in  STD_LOGIC; -- reset button for stopwatch, '0'-active
            sys_reset : in  STD_LOGIC; -- '0'-active reset for whole system
-           ctr_clear : out  STD_LOGIC; -- '1'-active reset for 16 bit couter
-           ctr_enable : out  STD_LOGIC); -- '1'-active enable signal for counter
+           watch_reset : out  STD_LOGIC; -- '1'-active reset for 16 bit couter
+           watch_running : out  STD_LOGIC); -- '1'-active enable signal for counter
 end stopwatch_controller;
 
 architecture Behavioral of stopwatch_controller is
 
--- "-" <==> "don't care", "|" <==> "OR"
--- STATE <=> OUTPUT (ctr_enable, ctr_clear), TRANSITION 1 (btn_toggle, btn_reset) => STATE, TRANSITION 2 ...
--- 000: "zero" <=> 00, 0- => 000, 1- => 001
--- 001: "start" <=> 10, 00 => 010, 10|11|01 => 001
--- 010: "running" <=> 10, 0- => 010, 1- => 011
--- 011: "stop" <=> 00, 00 => 100, 10|11|01 => 011
--- 100: "stopped" <=> 00, 00 => 100, 01 => 101, 1- => 001
--- 101: "reset" <=> 01, 00 => 000, 01|11|10 => 101
-signal loc_state: std_logic_vector(2 downto 0); -- current state
-signal loc_toggle: std_logic; -- local snapshot of btn_toggle
-signal loc_reset: std_logic; -- local snapshot of btn_reset
+type controller_state is (s_zero, s_start, s_running, s_stop, s_stopped, s_reset);
+
+signal state: controller_state; -- current state
+signal next_state: controller_state; -- current state
+signal toggle: std_logic; -- local snapshot of btn_toggle
+signal reset: std_logic; -- local snapshot of btn_reset
 
 begin
-    -- state transition logic
-    -- triggered on rising edge of clock
-    process (clk)
+
+    -- state save loop / reset handling
+    refresh_state: process (clk, sys_reset)
     begin
-        if rising_edge(clk) then
-            -- reset state machine if sys_reset is active (low)
-            if (sys_reset = '0') then
-                loc_state <= "000";
+        if rising_edge(clk) then 
+            if sys_reset = '0' then
+                state <= s_zero;
             else
-                -- update local snapshots of btn_toggle and btn_reset
-                loc_toggle <= btn_toggle;
-                loc_reset <= btn_reset;
-                -- whatever VHDL version we're using doesn't seem to support VHDL-2008 syntax...
-                -- so when-else (basically C# switch expressions) won't work :P
-                case loc_state is
-                    -- 000: "zero" <=> 00, 0- => 000, 1- => 001
-                    when "000" =>
-                        if (loc_toggle = '1') then
-                            loc_state <= "001";
-                        else
-                            loc_state <= "000";
-                        end if;
-                    -- 001: "start" <=> 10, 00 => 010, 10|11|01 => 001
-                    when "001" =>
-                        if (loc_toggle = '0') and (loc_reset = '0') then
-                            loc_state <= "010";
-                        else
-                            loc_state <= "001";
-                        end if;
-                    -- 010: "running" <=> 10, 0- => 010, 1- => 011
-                    when "010" =>
-                        if (loc_toggle = '1') then
-                            loc_state <= "011";
-                        else
-                            loc_state <= "010";
-                        end if;
-                    -- 011: "stop" <=> 00, 00 => 100, 10|11|01 => 011
-                    when "011" =>
-                        if (loc_toggle = '0') and (loc_reset = '0') then
-                            loc_state <= "100";
-                        else
-                            loc_state <= "011";
-                        end if;
-                    -- 100: "stopped" <=> 00, 00 => 100, 01 => 101, 1- => 001
-                    when "100" =>
-                        if (loc_toggle = '1') then
-                            loc_state <= "001";
-                        elsif (loc_reset = '1') then
-                            loc_state <= "101";
-                        else
-                            loc_state <= "100";
-                        end if;
-                    -- 101: "reset" <=> 01, 00 => 000, 01|11|10 => 101
-                    when "101" =>
-                        if (loc_reset = '0') and (loc_toggle = '0') then
-                            loc_state <= "000";
-                        else
-                            loc_state <= "101";
-                        end if;
-                    when others =>
-                        report "Invalid state" severity failure;
-                end case;
+                state <= next_state;
             end if;
         end if;
-    end process;
+    end process refresh_state;
+
+    -- state transition logic
+    transition: process (state, btn_toggle, btn_reset)
+    begin
+        -- whatever VHDL version we're using doesn't seem to support VHDL-2008 syntax...
+        -- so when-else (basically C# switch expressions) won't work :P
+        case state is
+            -- "zero" <=> 00, 0- => 000, 1- => 001
+            when s_zero =>
+                if (btn_toggle = '1') then
+                    next_state <= s_start;
+                else
+                    next_state <= s_zero;
+                end if;
+            -- "start" <=> 10, 00 => 010, 10|11|01 => 001
+            when s_start =>
+                if (btn_toggle = '0') and (btn_reset = '0') then
+                    next_state <= s_running;
+                else
+                    next_state <= s_start;
+                end if;
+            -- "running" <=> 10, 0- => 010, 1- => 011
+            when s_running =>
+                if (btn_toggle = '1') then
+                    next_state <= s_stop;
+                else
+                    next_state <= s_running;
+                end if;
+            -- "stop" <=> 00, 00 => 100, 10|11|01 => 011
+            when s_stop =>
+                if (btn_toggle = '0') and (btn_reset = '0') then
+                    next_state <= s_stopped;
+                else
+                    next_state <= s_stop;
+                end if;
+            -- "stopped" <=> 00, 00 => 100, 01 => 101, 1- => 001
+            when s_stopped =>
+                if (btn_toggle = '1') then
+                    next_state <= s_start;
+                elsif (btn_reset = '1') then
+                    next_state <= s_reset;
+                else
+                    next_state <= s_stopped;
+                end if;
+            -- "reset" <=> 01, 00 => 000, 01|11|10 => 101
+            when s_reset =>
+                if (btn_reset = '0') and (btn_toggle = '0') then
+                    next_state <= s_zero;
+                else
+                    next_state <= s_reset;
+                end if;
+            when others =>
+                report "Invalid state" severity failure;
+        end case;
+    end process transition;
 
     -- output logic
-    -- triggered when loc_state changes (I think)
-    process (loc_state)
+    -- triggered when next_state changes (I think)
+    output: process (next_state)
     begin
-        if (loc_state = "101") then
-            ctr_clear <= '1';
+        if (next_state = s_reset) then
+            watch_reset <= '1';
         else
-            ctr_clear <= '0';
+            watch_reset <= '0';
         end if;
-        if (loc_state = "001") or (loc_state = "010") then
-            ctr_enable <= '1';
+        if (next_state = s_start) or (next_state = s_running) then
+            watch_running <= '1';
         else 
-            ctr_enable <= '0';
+            watch_running <= '0';
         end if;
-    end process;
+    end process output;
     
 end Behavioral;
