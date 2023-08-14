@@ -1,0 +1,51 @@
+;btn_toggle;btn_reset;sys_reset;;watch_running;watch_reset
+sys reset;0;0;0;;0;0
+zero->zero;0;0;1;;0;0
+zero->zero;0;1;1;;0;0
+zero->start;1;0;1;;1;0
+start->start;1;0;1;;1;0
+start->start;1;1;1;;1;0
+start->start;0;1;1;;1;0
+start->running;0;0;1;;1;0
+running->running;0;0;1;;1;0
+running->running;0;1;1;;1;0
+running->stop;1;0;1;;0;0
+stop->stop;0;1;1;;0;0
+stop->stop;1;0;1;;0;0
+stop->stop;1;1;1;;0;0
+stop->stopped;0;0;1;;0;0
+stopped->stopped;0;0;1;;0;0
+stopped->stopped;0;0;1;;0;0
+stopped->stopped;0;0;1;;0;0
+stopped->start;1;0;1;;1;0
+start->running;0;0;1;;1;0
+running->running;0;0;1;;1;0
+running->running;0;0;1;;1;0
+running->running;0;0;1;;1;0
+running->running;0;1;1;;1;0
+running->running;0;0;1;;1;0
+running->stop;1;1;1;;0;0
+stop->stopped;0;0;1;;0;0
+stopped->start;1;1;1;;1;0
+start->running;0;0;1;;1;0
+running->stop;1;0;1;;0;0
+stop->stopped;0;0;1;;0;0
+stopped->reset;0;1;1;;0;1
+reset->reset;0;1;1;;0;1
+reset->reset;1;1;1;;0;1
+reset->reset;1;0;1;;0;1
+reset->zero;0;0;1;;0;0
+zero->zero;0;0;1;;0;0
+zero->zero;0;1;1;;0;0
+zero->start;1;1;1;;1;0
+start->running;0;0;1;;1;0
+running->running;0;0;1;;1;0
+running->running;0;0;1;;1;0
+running->running;0;0;1;;1;0
+running->running;0;0;1;;1;0
+running->running;0;0;1;;1;0
+sys reset =>zero;0;0;0;;0;0
+sys reset =>zero;0;0;0;;0;0
+sys reset =>zero;0;1;0;;0;0
+sys reset =>zero;1;0;0;;0;0
+sys reset =>zero;1;1;0;;0;0

@@ -146,12 +146,12 @@ BEGIN
                 read(zeile, leerzeichen);
                 read(zeile, var2);
                 expected := var1;
-                ASSERT string2std_logic(var1) = watch_reset
-                    REPORT "Vergleich fehlerhaft!" & "    Erwartungswert: " & var1 & "    Ergebnis: " & std_logic2string(watch_reset)
+                ASSERT string2std_logic(var1) = watch_running
+                    REPORT "Vergleich fehlerhaft!" & "    Erwartungswert: " & var1 & "    Ergebnis: " & std_logic2string(watch_running)
                     SEVERITY WARNING;
                 expected := var2;
-                ASSERT string2std_logic(var2) = watch_running
-                    REPORT "Vergleich fehlerhaft!" & "    Erwartungswert: " & var2 & "    Ergebnis: " & std_logic2string(watch_running)
+                ASSERT string2std_logic(var2) = watch_reset
+                    REPORT "Vergleich fehlerhaft!" & "    Erwartungswert: " & var2 & "    Ergebnis: " & std_logic2string(watch_reset)
                     SEVERITY WARNING;
         ELSE expected := (others => 'X');
             END IF;
@@ -161,7 +161,7 @@ BEGIN
 END PROCESS RESPONSE;
 
 MONITOR: PROCESS(clk)
-    FILE protokoll: TEXT OPEN WRITE_MODE IS "stopwatch_controller_monitor.txt";
+    FILE protokoll: TEXT OPEN WRITE_MODE IS "stopwatch_controller-test.log";
     VARIABLE zeile: LINE;
     VARIABLE leerzeichen: CHARACTER := ' ';
     VARIABLE var1: STRING(1 DOWNTO 1);
