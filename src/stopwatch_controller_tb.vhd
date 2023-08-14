@@ -150,8 +150,8 @@ BEGIN
                     REPORT "Vergleich fehlerhaft!" & "    Erwartungswert: " & var1 & "    Ergebnis: " & std_logic2string(watch_reset)
                     SEVERITY WARNING;
                 expected := var2;
-                ASSERT string2std_logic(var1) = watch_running
-                    REPORT "Vergleich fehlerhaft!" & "    Erwartungswert: " & var1 & "    Ergebnis: " & std_logic2string(watch_running)
+                ASSERT string2std_logic(var2) = watch_running
+                    REPORT "Vergleich fehlerhaft!" & "    Erwartungswert: " & var2 & "    Ergebnis: " & std_logic2string(watch_running)
                     SEVERITY WARNING;
         ELSE expected := (others => 'X');
             END IF;
