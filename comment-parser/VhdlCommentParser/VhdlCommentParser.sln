@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VhdlCommentParser", "VhdlCommentParser\VhdlCommentParser.csproj", "{6773583E-39FB-4251-96FA-005F2A199108}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6773583E-39FB-4251-96FA-005F2A199108}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6773583E-39FB-4251-96FA-005F2A199108}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6773583E-39FB-4251-96FA-005F2A199108}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6773583E-39FB-4251-96FA-005F2A199108}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9A15B9E3-AED2-4478-AED3-4FC5902AA6C3}
+	EndGlobalSection
+EndGlobal
