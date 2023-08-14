@@ -2,5 +2,9 @@ Command line:
    stopwatch_controller_tbv_isim_beh.exe
      -simmode  gui
      -simrunnum  0
-     -socket  56151
+     -socket  54957
 
+Mon Aug 14 22:42:49 2023
+
+
+ Elaboration Time: 0 sec

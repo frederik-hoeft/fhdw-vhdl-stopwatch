@@ -1,0 +1,9 @@
+btn_toggle: 0 btn_reset: 0 sys_reset: 0 watch_reset: 0 watch_running: 0 Expected: 0 Time: 150 ns
+btn_toggle: 0 btn_reset: 0 sys_reset: 1 watch_reset: 0 watch_running: 0 Expected: 0 Time: 250 ns
+btn_toggle: 1 btn_reset: 0 sys_reset: 1 watch_reset: 0 watch_running: 1 Expected: 1 Time: 350 ns
+btn_toggle: 0 btn_reset: 0 sys_reset: 1 watch_reset: 0 watch_running: 1 Expected: 1 Time: 450 ns
+btn_toggle: 0 btn_reset: 0 sys_reset: 1 watch_reset: 0 watch_running: 1 Expected: 1 Time: 550 ns
+btn_toggle: 0 btn_reset: 0 sys_reset: 1 watch_reset: 0 watch_running: 1 Expected: X Time: 650 ns
+btn_toggle: 0 btn_reset: 0 sys_reset: 1 watch_reset: 0 watch_running: 1 Expected: X Time: 750 ns
+btn_toggle: 0 btn_reset: 0 sys_reset: 1 watch_reset: 0 watch_running: 1 Expected: X Time: 850 ns
+btn_toggle: 0 btn_reset: 0 sys_reset: 1 watch_reset: 0 watch_running: 1 Expected: X Time: 950 ns

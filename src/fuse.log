@@ -1,14 +1,14 @@
-Running: /opt/Xilinx/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -o /home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller_tbv_isim_beh.exe -prj /home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller_tbv_beh.prj stopwatch_controller_tbv 
+Running: /home/dev/software/xilinx/installation/14.7/ISE_DS/ISE/bin/lin64/unwrapped/fuse -intstyle ise -incremental -o /home/dev/projects/es4/fhdw-vhdl-stopwatch/src/stopwatch_controller_tbv_isim_beh.exe -prj /home/dev/projects/es4/fhdw-vhdl-stopwatch/src/stopwatch_controller_tbv_beh.prj work.stopwatch_controller_tbv 
 ISim P.20131013 (signature 0xfbc00daa)
-Number of CPUs detected in this system: 32
-Turning on mult-threading, number of parallel sub-compilation jobs: 64 
+Number of CPUs detected in this system: 8
+Turning on mult-threading, number of parallel sub-compilation jobs: 16 
 Determining compilation order of HDL files
-Parsing VHDL file "/home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller.vhd" into library work
-Parsing VHDL file "/home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller_tb.vhd" into library work
+Parsing VHDL file "/home/dev/projects/es4/fhdw-vhdl-stopwatch/src/stopwatch_controller.vhd" into library work
+Parsing VHDL file "/home/dev/projects/es4/fhdw-vhdl-stopwatch/src/stopwatch_controller_tb.vhd" into library work
 Starting static elaboration
 Completed static elaboration
-Fuse Memory Usage: 84652 KB
-Fuse CPU Usage: 600 ms
+Fuse Memory Usage: 84460 KB
+Fuse CPU Usage: 880 ms
 Compiling package standard
 Compiling package std_logic_1164
 Compiling package textio
@@ -18,7 +18,7 @@ Compiling architecture test_bench of entity stopwatch_controller_tbv
 Time Resolution for simulation is 1ps.
 Waiting for 1 sub-compilation(s) to finish...
 Compiled 7 VHDL Units
-Built simulation executable /home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller_tbv_isim_beh.exe
-Fuse Memory Usage: 4328400 KB
-Fuse CPU Usage: 650 ms
-GCC CPU Usage: 780 ms
+Built simulation executable /home/dev/projects/es4/fhdw-vhdl-stopwatch/src/stopwatch_controller_tbv_isim_beh.exe
+Fuse Memory Usage: 1182648 KB
+Fuse CPU Usage: 950 ms
+GCC CPU Usage: 250 ms

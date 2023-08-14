@@ -24,3 +24,21 @@ map -intstyle ise -p xa3s500e-cpg132-4 -cm area -ir off -pr off -c 100 -o stopwa
 par -w -intstyle ise -ol high -t 1 stopwatch_controller_map.ncd stopwatch_controller.ncd stopwatch_controller.pcf 
 trce -intstyle ise -v 3 -s 4 -n 3 -fastpaths -xml stopwatch_controller.twx stopwatch_controller.ncd -o stopwatch_controller.twr stopwatch_controller.pcf 
 bitgen -intstyle ise -f stopwatch_controller.ut stopwatch_controller.ncd 
+xst -intstyle ise -ifn "/home/dev/projects/es4/fhdw-vhdl-stopwatch/src/stopwatch_controller.xst" -ofn "/home/dev/projects/es4/fhdw-vhdl-stopwatch/src/stopwatch_controller.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -i -p xa3s500e-cpg132-4 stopwatch_controller.ngc stopwatch_controller.ngd  
+map -intstyle ise -p xa3s500e-cpg132-4 -cm area -ir off -pr off -c 100 -o stopwatch_controller_map.ncd stopwatch_controller.ngd stopwatch_controller.pcf 
+par -w -intstyle ise -ol high -t 1 stopwatch_controller_map.ncd stopwatch_controller.ncd stopwatch_controller.pcf 
+trce -intstyle ise -v 3 -s 4 -n 3 -fastpaths -xml stopwatch_controller.twx stopwatch_controller.ncd -o stopwatch_controller.twr stopwatch_controller.pcf 
+bitgen -intstyle ise -f stopwatch_controller.ut stopwatch_controller.ncd 
+xst -intstyle ise -ifn "/home/dev/projects/es4/fhdw-vhdl-stopwatch/src/stopwatch_controller.xst" -ofn "/home/dev/projects/es4/fhdw-vhdl-stopwatch/src/stopwatch_controller.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -i -p xa3s500e-cpg132-4 stopwatch_controller.ngc stopwatch_controller.ngd  
+map -intstyle ise -p xa3s500e-cpg132-4 -cm area -ir off -pr off -c 100 -o stopwatch_controller_map.ncd stopwatch_controller.ngd stopwatch_controller.pcf 
+par -w -intstyle ise -ol high -t 1 stopwatch_controller_map.ncd stopwatch_controller.ncd stopwatch_controller.pcf 
+trce -intstyle ise -v 3 -s 4 -n 3 -fastpaths -xml stopwatch_controller.twx stopwatch_controller.ncd -o stopwatch_controller.twr stopwatch_controller.pcf 
+bitgen -intstyle ise -f stopwatch_controller.ut stopwatch_controller.ncd 
+xst -intstyle ise -ifn "/home/dev/projects/es4/fhdw-vhdl-stopwatch/src/stopwatch_controller.xst" -ofn "/home/dev/projects/es4/fhdw-vhdl-stopwatch/src/stopwatch_controller.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -i -p xa3s500e-cpg132-4 stopwatch_controller.ngc stopwatch_controller.ngd  
+map -intstyle ise -p xa3s500e-cpg132-4 -cm area -ir off -pr off -c 100 -o stopwatch_controller_map.ncd stopwatch_controller.ngd stopwatch_controller.pcf 
+par -w -intstyle ise -ol high -t 1 stopwatch_controller_map.ncd stopwatch_controller.ncd stopwatch_controller.pcf 
+trce -intstyle ise -v 3 -s 4 -n 3 -fastpaths -xml stopwatch_controller.twx stopwatch_controller.ncd -o stopwatch_controller.twr stopwatch_controller.pcf 
+bitgen -intstyle ise -f stopwatch_controller.ut stopwatch_controller.ncd 

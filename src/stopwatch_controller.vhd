@@ -16,8 +16,6 @@ type controller_state is (s_zero, s_start, s_running, s_stop, s_stopped, s_reset
 
 signal state: controller_state; -- current state
 signal next_state: controller_state; -- current state
-signal toggle: std_logic; -- local snapshot of btn_toggle
-signal reset: std_logic; -- local snapshot of btn_reset
 
 begin
 
