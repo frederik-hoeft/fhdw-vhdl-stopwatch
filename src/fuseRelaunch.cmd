@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -o "/home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller_tbv_isim_beh.exe" -prj "/home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller_tbv_beh.prj" "stopwatch_controller_tbv" 

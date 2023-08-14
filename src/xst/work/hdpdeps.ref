@@ -1,8 +1,8 @@
 V3 3
-FL /home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller.vhd 2023/08/08.16:29:19 P.20131013
-EN work/stopwatch_controller 1691505021 \
+FL /home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller.vhd 2023/08/14.21:03:00 P.20131013
+EN work/stopwatch_controller 1692041898 \
       FL /home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller.vhd \
       PB ieee/std_logic_1164 1381692176
-AR work/stopwatch_controller/Behavioral 1691505022 \
+AR work/stopwatch_controller/Behavioral 1692041899 \
       FL /home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller.vhd \
-      EN work/stopwatch_controller 1691505021
+      EN work/stopwatch_controller 1692041898

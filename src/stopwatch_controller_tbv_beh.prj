@@ -1,0 +1,2 @@
+vhdl work "stopwatch_controller.vhd"
+vhdl work "stopwatch_controller_tb.vhd"

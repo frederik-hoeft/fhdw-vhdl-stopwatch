@@ -92,7 +92,7 @@ begin
     return result;
 end std_logic2string;
 
-shared variable expected : STRING(8 DOWNTO 1);
+shared variable expected : STRING(1 DOWNTO 1);
 
 -- Testbench
 BEGIN
@@ -125,7 +125,7 @@ BEGIN
         ELSE
             btn_toggle <= "0";
             btn_reset <= "0";
-            btn_reset <= "1";
+            sys_reset <= "1";
         END IF;
     END IF;
 END PROCESS STIMULI;

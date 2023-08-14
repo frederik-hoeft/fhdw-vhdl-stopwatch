@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=/home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller.ncd
+OUTFILE=/home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller.bit
+FAMILY=Automotive Spartan3E
+PART=xa3s500e-4cpg132
+WORKINGDIR=/home/fred/xilinx/assignments/stopwatch/src
+LICENSE=WebPack
+USER_INFO=212788242_0_0_678

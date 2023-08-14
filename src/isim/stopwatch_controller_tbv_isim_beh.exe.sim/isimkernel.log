@@ -1,0 +1,6 @@
+Command line:
+   stopwatch_controller_tbv_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  56151
+

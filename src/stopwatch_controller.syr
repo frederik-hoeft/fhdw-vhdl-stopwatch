@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.01 secs
+Total CPU time to Xst completion: 0.00 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.01 secs
+Total CPU time to Xst completion: 0.00 secs
  
 --> 
 Reading design: stopwatch_controller.prj
@@ -71,7 +71,7 @@ Automatic Register Balancing       : No
 
 ---- Target Options
 Add IO Buffers                     : YES
-Global Maximum Fanout              : 500
+Global Maximum Fanout              : 100000
 Add Generic Clock Buffer(BUFG)     : 24
 Register Duplication               : YES
 Slice Packing                      : YES
@@ -108,17 +108,19 @@ Slice Utilization Ratio Delta      : 5
 *                          HDL Compilation                              *
 =========================================================================
 Compiling vhdl file "/home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller.vhd" in Library work.
-Entity <stopwatch_controller> compiled.
-Entity <stopwatch_controller> (Architecture <Behavioral>) compiled.
+Architecture behavioral of Entity stopwatch_controller is up to date.
 
 =========================================================================
 *                     Design Hierarchy Analysis                         *
 =========================================================================
+Analyzing hierarchy for entity <stopwatch_controller> in library <work> (architecture <behavioral>).
+
 
 =========================================================================
 *                            HDL Analysis                               *
 =========================================================================
-Analyzing Entity <stopwatch_controller> in library <work> (Architecture <Behavioral>).
+Analyzing Entity <stopwatch_controller> in library <work> (Architecture <behavioral>).
+INFO:Xst:1749 - "/home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller.vhd" line 87: report: Invalid state
 Entity <stopwatch_controller> analyzed. Unit <stopwatch_controller> generated.
 
 
@@ -130,17 +132,27 @@ Performing bidirectional port resolution...
 
 Synthesizing Unit <stopwatch_controller>.
     Related source file is "/home/fred/xilinx/assignments/stopwatch/src/stopwatch_controller.vhd".
-WARNING:Xst:1306 - Output <ctr_clear> is never assigned.
-WARNING:Xst:647 - Input <btn_toggle> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <btn_reset> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:1306 - Output <ctr_enable> is never assigned.
+WARNING:Xst:1780 - Signal <toggle> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:1780 - Signal <reset> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+    Using one-hot encoding for signal <next_state>.
+INFO:Xst:2117 - HDL ADVISOR - Mux Selector <state> of Case statement line 41 was re-encoded using one-hot encoding. The case statement will be optimized (default statement optimization), but this optimization may lead to design initialization problems. To ensure the design works safely, you can:
+   	- add an 'INIT' attribute on signal <state> (optimization is then done without any risk)
+   	- use the attribute 'signal_encoding user' to avoid onehot optimization
+   	- use the attribute 'safe_implementation yes' to force XST to perform a safe (but less efficient) optimization
+    Using one-hot encoding for signal <state>.
+    Found 6-bit register for signal <state>.
+    Summary:
+	inferred   6 D-type flip-flop(s).
 Unit <stopwatch_controller> synthesized.
 
 
 =========================================================================
 HDL Synthesis Report
 
-Found no macro
+Macro Statistics
+# Registers                                            : 1
+ 6-bit register                                        : 1
+
 =========================================================================
 
 =========================================================================
@@ -151,7 +163,10 @@ Found no macro
 =========================================================================
 Advanced HDL Synthesis Report
 
-Found no macro
+Macro Statistics
+# Registers                                            : 6
+ Flip-Flops                                            : 6
+
 =========================================================================
 
 =========================================================================
@@ -169,7 +184,10 @@ Final Macro Processing ...
 =========================================================================
 Final Register Report
 
-Found no macro
+Macro Statistics
+# Registers                                            : 6
+ Flip-Flops                                            : 6
+
 =========================================================================
 
 =========================================================================
@@ -194,9 +212,23 @@ Optimization Goal                  : Speed
 Keep Hierarchy                     : No
 
 Design Statistics
-# IOs                              : 4
+# IOs                              : 6
 
 Cell Usage :
+# BELS                             : 18
+#      LUT2                        : 1
+#      LUT2_L                      : 1
+#      LUT3                        : 4
+#      LUT4                        : 8
+#      MUXF5                       : 4
+# FlipFlops/Latches                : 6
+#      FD                          : 4
+#      FDR                         : 2
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 5
+#      IBUF                        : 3
+#      OBUF                        : 2
 =========================================================================
 
 Device utilization summary:
@@ -204,9 +236,12 @@ Device utilization summary:
 
 Selected Device : xa3s500ecpg132-4 
 
- Number of Slices:                        0  out of   4656     0%  
- Number of IOs:                           4
- Number of bonded IOBs:                   0  out of     92     0%  
+ Number of Slices:                        7  out of   4656     0%  
+ Number of Slice Flip Flops:              6  out of   9312     0%  
+ Number of 4 input LUTs:                 14  out of   9312     0%  
+ Number of IOs:                           6
+ Number of bonded IOBs:                   6  out of     92     6%  
+ Number of GCLKs:                         1  out of     24     4%  
 
 ---------------------------
 Partition Resource Summary:
@@ -226,7 +261,11 @@ NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
 
 Clock Information:
 ------------------
-No clock signals found in this design
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | BUFGP                  | 6     |
+-----------------------------------+------------------------+-------+
 
 Asynchronous Control Signals Information:
 ----------------------------------------
@@ -236,14 +275,98 @@ Timing Summary:
 ---------------
 Speed Grade: -4
 
-   Minimum period: No path found
-   Minimum input arrival time before clock: No path found
-   Maximum output required time after clock: No path found
-   Maximum combinational path delay: No path found
+   Minimum period: 3.021ns (Maximum Frequency: 331.016MHz)
+   Minimum input arrival time before clock: 4.389ns
+   Maximum output required time after clock: 5.974ns
+   Maximum combinational path delay: 7.071ns
 
 Timing Detail:
 --------------
 All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'clk'
+  Clock period: 3.021ns (frequency: 331.016MHz)
+  Total number of paths / destination ports: 14 / 6
+-------------------------------------------------------------------------
+Delay:               3.021ns (Levels of Logic = 2)
+  Source:            state_5 (FF)
+  Destination:       state_0 (FF)
+  Source Clock:      clk rising
+  Destination Clock: clk rising
+
+  Data Path: state_5 to state_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q               3   0.591   0.610  state_5 (state_5)
+     LUT2_L:I1->LO         1   0.704   0.104  next_state<0>1_SW0 (N11)
+     LUT4:I3->O            1   0.704   0.000  next_state<0>1 (next_state<0>1)
+     FD:D                      0.308          state_0
+    ----------------------------------------
+    Total                      3.021ns (2.307ns logic, 0.714ns route)
+                                       (76.4% logic, 23.6% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
+  Total number of paths / destination ports: 26 / 8
+-------------------------------------------------------------------------
+Offset:              4.389ns (Levels of Logic = 2)
+  Source:            btn_toggle (PAD)
+  Destination:       state_4 (FF)
+  Destination Clock: clk rising
+
+  Data Path: btn_toggle to state_4
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            12   1.218   1.136  btn_toggle_IBUF (btn_toggle_IBUF)
+     LUT2:I0->O            1   0.704   0.420  next_state<4>1_SW0 (N6)
+     FDR:R                     0.911          state_4
+    ----------------------------------------
+    Total                      4.389ns (2.833ns logic, 1.556ns route)
+                                       (64.5% logic, 35.5% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
+  Total number of paths / destination ports: 8 / 2
+-------------------------------------------------------------------------
+Offset:              5.974ns (Levels of Logic = 3)
+  Source:            state_2 (FF)
+  Destination:       watch_running (PAD)
+  Source Clock:      clk rising
+
+  Data Path: state_2 to watch_running
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDR:C->Q              4   0.591   0.666  state_2 (state_2)
+     LUT3:I1->O            1   0.704   0.000  watch_running_or00001 (watch_running_or0000)
+     MUXF5:I1->O           1   0.321   0.420  watch_running_or0000_f5 (watch_running_OBUF)
+     OBUF:I->O                 3.272          watch_running_OBUF (watch_running)
+    ----------------------------------------
+    Total                      5.974ns (4.888ns logic, 1.086ns route)
+                                       (81.8% logic, 18.2% route)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 4 / 2
+-------------------------------------------------------------------------
+Delay:               7.071ns (Levels of Logic = 4)
+  Source:            btn_toggle (PAD)
+  Destination:       watch_running (PAD)
+
+  Data Path: btn_toggle to watch_running
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            12   1.218   1.136  btn_toggle_IBUF (btn_toggle_IBUF)
+     LUT3:I0->O            1   0.704   0.000  watch_running_or00001 (watch_running_or0000)
+     MUXF5:I1->O           1   0.321   0.420  watch_running_or0000_f5 (watch_running_OBUF)
+     OBUF:I->O                 3.272          watch_running_OBUF (watch_running)
+    ----------------------------------------
+    Total                      7.071ns (5.515ns logic, 1.556ns route)
+                                       (78.0% logic, 22.0% route)
 
 =========================================================================
 
@@ -254,9 +377,9 @@ Total CPU time to Xst completion: 1.16 secs
 --> 
 
 
-Total memory usage is 498744 kilobytes
+Total memory usage is 499072 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    4 (   0 filtered)
-Number of infos    :    0 (   0 filtered)
+Number of warnings :    2 (   0 filtered)
+Number of infos    :    2 (   0 filtered)
 
