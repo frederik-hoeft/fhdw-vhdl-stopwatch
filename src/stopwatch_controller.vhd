@@ -1,105 +1,105 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
 
-entity stopwatch_controller is
-    Port ( clk : in  STD_LOGIC; -- clock
-           btn_toggle : in  STD_LOGIC; -- start/stop button for stopwatch, '1'-active
-           btn_reset : in  STD_LOGIC; -- reset button for stopwatch, '0'-active
-           sys_reset : in  STD_LOGIC; -- '0'-active reset for whole system
-           watch_reset : out  STD_LOGIC; -- '1'-active reset for 16 bit couter
-           watch_running : out  STD_LOGIC); -- '1'-active enable signal for counter
-end stopwatch_controller;
+ENTITY stopwatch_controller IS
+    PORT ( clk : IN  std_logic; -- clock
+           btn_toggle : IN  std_logic; -- start/stop button fOR stopwatch, '1'-active
+           btn_reset : IN  std_logic; -- reset button fOR stopwatch, '0'-active
+           sys_reset : IN  std_logic; -- '0'-active reset fOR whole system
+           watch_reset : OUT  std_logic; -- '1'-active reset fOR 16 bit couter
+           watch_running : OUT  std_logic); -- '1'-active enable signal fOR counter
+END stopwatch_controller;
 
-architecture Behavioral of stopwatch_controller is
+ARCHITECTURE behavioral OF stopwatch_controller IS
 
-type controller_state is (s_zero, s_start, s_running, s_stop, s_stopped, s_reset);
+TYPE controller_state IS (s_zero, s_start, s_running, s_stop, s_stopped, s_reset);
 
-signal state: controller_state; -- current state
-signal next_state: controller_state; -- current state
+SIGNAL state: controller_state; -- current state
+SIGNAL next_state: controller_state; -- current state
 
-begin
+BEGIN
 
     -- state save loop / reset handling
-    refresh_state: process (clk, sys_reset)
-    begin
-        if rising_edge(clk) then 
-            if sys_reset = '0' then
+    refresh_state: PROCESS (clk, sys_reset)
+    BEGIN
+        IF rising_edge(clk) THEN 
+            IF sys_reset = '0' THEN
                 state <= s_zero;
-            else
+            ELSE
                 state <= next_state;
-            end if;
-        end if;
-    end process refresh_state;
+            END IF;
+        END IF;
+    END PROCESS refresh_state;
 
     -- state transition logic
-    transition: process (state, btn_toggle, btn_reset)
-    begin
-        -- whatever VHDL version we're using doesn't seem to support VHDL-2008 syntax...
-        -- so when-else (basically C# switch expressions) won't work :P
-        case state is
+    transition: PROCESS (state, btn_toggle, btn_reset)
+    BEGIN
+        -- whatever VHDL version we're using doesn't seem to suppORt VHDL-2008 syntax...
+        -- so WHEN-ELSE (basically C# switch expressions) won't wORk :P
+        CASE state IS
             -- "zero" <=> 00, 0- => 000, 1- => 001
-            when s_zero =>
-                if (btn_toggle = '1') then
+            WHEN s_zero =>
+                IF (btn_toggle = '1') THEN
                     next_state <= s_start;
-                else
+                ELSE
                     next_state <= s_zero;
-                end if;
+                END IF;
             -- "start" <=> 10, 00 => 010, 10|11|01 => 001
-            when s_start =>
-                if (btn_toggle = '0') and (btn_reset = '0') then
+            WHEN s_start =>
+                IF (btn_toggle = '0') AND (btn_reset = '0') THEN
                     next_state <= s_running;
-                else
+                ELSE
                     next_state <= s_start;
-                end if;
+                END IF;
             -- "running" <=> 10, 0- => 010, 1- => 011
-            when s_running =>
-                if (btn_toggle = '1') then
+            WHEN s_running =>
+                IF (btn_toggle = '1') THEN
                     next_state <= s_stop;
-                else
+                ELSE
                     next_state <= s_running;
-                end if;
+                END IF;
             -- "stop" <=> 00, 00 => 100, 10|11|01 => 011
-            when s_stop =>
-                if (btn_toggle = '0') and (btn_reset = '0') then
+            WHEN s_stop =>
+                IF (btn_toggle = '0') AND (btn_reset = '0') THEN
                     next_state <= s_stopped;
-                else
+                ELSE
                     next_state <= s_stop;
-                end if;
+                END IF;
             -- "stopped" <=> 00, 00 => 100, 01 => 101, 1- => 001
-            when s_stopped =>
-                if (btn_toggle = '1') then
+            WHEN s_stopped =>
+                IF (btn_toggle = '1') THEN
                     next_state <= s_start;
-                elsif (btn_reset = '1') then
+                ELSIF (btn_reset = '1') THEN
                     next_state <= s_reset;
-                else
+                ELSE
                     next_state <= s_stopped;
-                end if;
+                END IF;
             -- "reset" <=> 01, 00 => 000, 01|11|10 => 101
-            when s_reset =>
-                if (btn_reset = '0') and (btn_toggle = '0') then
+            WHEN s_reset =>
+                IF (btn_reset = '0') AND (btn_toggle = '0') THEN
                     next_state <= s_zero;
-                else
+                ELSE
                     next_state <= s_reset;
-                end if;
-            when others =>
-                report "Invalid state" severity failure;
-        end case;
-    end process transition;
+                END IF;
+            WHEN OTHERS =>
+                REPORT "Invalid state" SEVERITY failure;
+        END CASE;
+    END PROCESS transition;
 
     -- output logic
-    -- triggered when next_state changes (I think)
-    output: process (state)
-    begin
-        if (state = s_reset) then
+    -- triggered WHEN next_state changes (I think)
+    output: PROCESS (state)
+    BEGIN
+        IF (state = s_reset) THEN
             watch_reset <= '1';
-        else
+        ELSE
             watch_reset <= '0';
-        end if;
-        if (state = s_start) or (state = s_running) then
+        END IF;
+        IF (state = s_start) OR (state = s_running) THEN
             watch_running <= '1';
-        else 
+        ELSE 
             watch_running <= '0';
-        end if;
-    end process output;
+        END IF;
+    END PROCESS output;
     
-end Behavioral;
+END behavioral;

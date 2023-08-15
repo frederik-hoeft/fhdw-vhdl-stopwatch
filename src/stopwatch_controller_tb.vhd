@@ -12,11 +12,11 @@ ENTITY stopwatch_controller_tbv IS
 END stopwatch_controller_tbv;
 
 ARCHITECTURE test_bench OF stopwatch_controller_tbv IS
--- Component Declaration for the Unit Under Test (UUT)
+-- Component Declaration FOR the Unit Under Test (UUT)
 COMPONENT stopwatch_controller
-PORT(clk,btn_toggle,btn_reset,sys_reset : in std_logic;
-    watch_reset : out std_logic;
-    watch_running : out std_logic);
+PORT(clk,btn_toggle,btn_reset,sys_reset : IN std_logic;
+    watch_reset : OUT std_logic;
+    watch_running : OUT std_logic);
 END COMPONENT;
 
 --Inputs
@@ -26,14 +26,14 @@ SIGNAL btn_reset : std_logic_vector(0 DOWNTO 0);
 SIGNAL sys_reset : std_logic_vector(0 DOWNTO 0);
 
 --Outputs
-SIGNAL watch_reset : std_logic_vector(0 downto 0);
-SIGNAL watch_running : std_logic_vector(0 downto 0);
+SIGNAL watch_reset : std_logic_vector(0 DOWNTO 0);
+SIGNAL watch_running : std_logic_vector(0 DOWNTO 0);
 
 --Variablen fuer den Simulationsablauf
 SIGNAL DebugVariable : boolean:=true;
 --=============================================================
 --Functions
-FUNCTION char2std_logic (ch: IN CHARACTER) RETURN std_logic IS
+FUNCTION char2std_logic (ch: IN character) RETURN std_logic IS
 BEGIN
     CASE ch IS
         WHEN 'U' | 'u' => RETURN 'U';
@@ -48,12 +48,12 @@ BEGIN
         WHEN OTHERS =>
     ASSERT FALSE
         REPORT "Illegal Character found" & ch
-        SEVERITY ERROR;
+        SEVERITY error;
     RETURN 'U';
     END CASE;
 END;
 
-FUNCTION string2std_logic (s: STRING) RETURN std_logic_vector IS
+FUNCTION string2std_logic (s: string) RETURN std_logic_vector IS
 VARIABLE vector: std_logic_vector(s'LEFT - 1 DOWNTO 0);
 BEGIN
     FOR i IN s'RANGE LOOP
@@ -63,37 +63,37 @@ BEGIN
 END;
 
 -- converts std_logic into a character
-FUNCTION std_logic2char(sl: std_logic) return character is
-        variable c: character;
-        begin
-            case sl is
-                 when 'U' => c:= 'U';
-                 when 'X' => c:= 'X';
-                 when '0' => c:= '0';
-                 when '1' => c:= '1';
-                 when 'Z' => c:= 'Z';
-                 when 'W' => c:= 'W';
-                 when 'L' => c:= 'L';
-                 when 'H' => c:= 'H';
-                 when '-' => c:= '-';
-            end case;
-        return c;
-     end std_logic2char;
+FUNCTION std_logic2char(sl: std_logic) RETURN character IS
+        VARIABLE c: character;
+        BEGIN
+            CASE sl IS
+                 WHEN 'U' => c:= 'U';
+                 WHEN 'X' => c:= 'X';
+                 WHEN '0' => c:= '0';
+                 WHEN '1' => c:= '1';
+                 WHEN 'Z' => c:= 'Z';
+                 WHEN 'W' => c:= 'W';
+                 WHEN 'L' => c:= 'L';
+                 WHEN 'H' => c:= 'H';
+                 WHEN '-' => c:= '-';
+            END CASE;
+        RETURN c;
+     END std_logic2char;
 
-FUNCTION std_logic2string(slv: std_logic_vector) return string is
-    variable result : string (1 to slv'length);
-    variable r : integer;
-begin
+FUNCTION std_logic2string(slv: std_logic_vector) RETURN string IS
+    VARIABLE result : string (1 TO slv'LENGTH);
+    VARIABLE r : integer;
+BEGIN
     r := 1;
-    for i in slv'range loop
+    FOR i IN slv'RANGE LOOP
         result(r) := std_logic2char(slv(i));
         r := r + 1;
-    end loop;
-    return result;
-end std_logic2string;
+    END LOOP;
+    RETURN result;
+END std_logic2string;
 
-shared variable expected1 : STRING(1 DOWNTO 1);
-shared variable expected2 : STRING(1 DOWNTO 1);
+SHARED VARIABLE expected1 : string(1 DOWNTO 1);
+SHARED VARIABLE expected2 : string(1 DOWNTO 1);
 
 -- Testbench
 BEGIN
@@ -103,25 +103,25 @@ clk <= NOT clk AFTER 50 ns;
 UUT: stopwatch_controller PORT MAP(clk=>clk, btn_toggle=>btn_toggle(0), btn_reset=>btn_reset(0), sys_reset=>sys_reset(0), watch_reset=>watch_reset(0), watch_running=>watch_running(0));
 
 STIMULI: PROCESS(clk)
-    FILE testpattern: TEXT OPEN READ_MODE IS "stopwatch_controller-inputs.txt";
-    VARIABLE zeile: LINE;
-    VARIABLE leerzeichen: CHARACTER;
-    VARIABLE var1: STRING(1 DOWNTO 1);
-    VARIABLE var2: STRING(1 DOWNTO 1);
-    VARIABLE var3: STRING(1 DOWNTO 1);
+    FILE testpattern: text OPEN READ_MODE IS "stopwatch_controller-inputs.txt";
+    VARIABLE var_line: line;
+    VARIABLE whitespace: character;
+    VARIABLE var1: string(1 DOWNTO 1);
+    VARIABLE var2: string(1 DOWNTO 1);
+    VARIABLE var3: string(1 DOWNTO 1);
 BEGIN
-    ASSERT DebugVariable REPORT "STIMULI" SEVERITY NOTE;
+    ASSERT DebugVariable REPORT "STIMULI" SEVERITY note;
     IF(clk'EVENT AND clk = '1') THEN
         IF(NOT endfile(testpattern)) THEN
-            readline(testpattern, zeile);
-            read(zeile, var1);
+            readline(testpattern, var_line);
+            read(var_line, var1);
             btn_toggle <= string2std_logic(var1);
             -- ueberspringen des Leerzeichens
-            read(zeile, leerzeichen);
-            read(zeile, var2);
+            read(var_line, whitespace);
+            read(var_line, var2);
             btn_reset <= string2std_logic(var2);
-            read(zeile, leerzeichen);
-            read(zeile, var3);
+            read(var_line, whitespace);
+            read(var_line, var3);
             sys_reset <= string2std_logic(var3);
         ELSE
             btn_toggle <= "0";
@@ -132,28 +132,28 @@ BEGIN
 END PROCESS STIMULI;
 
 RESPONSE: PROCESS(clk)
-    FILE vergleichspattern: TEXT OPEN READ_MODE IS "stopwatch_controller-outputs.txt";
-    VARIABLE zeile: LINE;
-    VARIABLE leerzeichen: CHARACTER;
-    VARIABLE var1: STRING(1 DOWNTO 1);
-    VARIABLE var2: STRING(1 DOWNTO 1);
+    FILE comparison_pattern: text OPEN READ_MODE IS "stopwatch_controller-outputs.txt";
+    VARIABLE var_line: line;
+    VARIABLE whitespace: character;
+    VARIABLE var1: string(1 DOWNTO 1);
+    VARIABLE var2: string(1 DOWNTO 1);
 BEGIN
-    ASSERT DebugVariable REPORT "EXPECTED" SEVERITY NOTE;
+    ASSERT DebugVariable REPORT "EXPECTED" SEVERITY note;
     IF(clk'EVENT AND clk = '1') THEN
-        IF(NOW > 100 ns) THEN
-            IF(NOT endfile(vergleichspattern)) THEN
-                readline(vergleichspattern, zeile);
-                read(zeile, var1);
-                read(zeile, leerzeichen);
-                read(zeile, var2);
+        IF(now > 100 ns) THEN
+            IF(NOT endfile(comparison_pattern)) THEN
+                readline(comparison_pattern, var_line);
+                read(var_line, var1);
+                read(var_line, whitespace);
+                read(var_line, var2);
                 expected1 := var1;
                 ASSERT string2std_logic(var1) = watch_running
                     REPORT "Vergleich fehlerhaft!" & "    Erwartungswert: " & var1 & "    Ergebnis: " & std_logic2string(watch_running)
-                    SEVERITY WARNING;
+                    SEVERITY warning;
                 expected2 := var2;
                 ASSERT string2std_logic(var2) = watch_reset
                     REPORT "Vergleich fehlerhaft!" & "    Erwartungswert: " & var2 & "    Ergebnis: " & std_logic2string(watch_reset)
-                    SEVERITY WARNING;
+                    SEVERITY warning;
             ELSE 
                 expected1 := (others => 'X');
                 expected2 := (others => 'X');
@@ -164,42 +164,42 @@ BEGIN
 END PROCESS RESPONSE;
 
 MONITOR: PROCESS(clk)
-    FILE protokoll: TEXT OPEN WRITE_MODE IS "stopwatch_controller-test.log";
-    VARIABLE zeile: LINE;
-    VARIABLE leerzeichen: CHARACTER := ' ';
-    VARIABLE var1: STRING(1 DOWNTO 1);
-    VARIABLE var2: STRING(1 DOWNTO 1);
-    VARIABLE var3: STRING(1 DOWNTO 1);
-    VARIABLE var4: STRING(1 DOWNTO 1);
-    VARIABLE var5: STRING(1 DOWNTO 1);
-    VARIABLE simulationszeit: TIME;
+    FILE protocol: text OPEN WRITE_MODE IS "stopwatch_controller-test.log";
+    VARIABLE var_line: line;
+    VARIABLE whitespace: character := ' ';
+    VARIABLE var1: string(1 DOWNTO 1);
+    VARIABLE var2: string(1 DOWNTO 1);
+    VARIABLE var3: string(1 DOWNTO 1);
+    VARIABLE var4: string(1 DOWNTO 1);
+    VARIABLE var5: string(1 DOWNTO 1);
+    VARIABLE simulation_time: time;
 BEGIN
-    ASSERT DebugVariable REPORT "MONITOR" SEVERITY NOTE;
-    IF(NOW > 100 ns) THEN
+    ASSERT DebugVariable REPORT "MONITOR" SEVERITY note;
+    IF(now > 100 ns) THEN
         IF(clk'EVENT AND clk = '1') THEN
             var1 := std_logic2string(btn_toggle);
             var2 := std_logic2string(btn_reset);
             var3 := std_logic2string(sys_reset);
-            var4 := std_logic2string(watch_running);
+            var4 := std_logic2string(watch_running); 
             var5 := std_logic2string(watch_reset);
-            simulationszeit := NOW;
-            write(zeile, "btn_toggle: " & var1);
-            write(zeile, leerzeichen);
-            write(zeile, "btn_reset: " & var2);
-            write(zeile, leerzeichen);
-            write(zeile, "sys_reset: " & var3);
-            write(zeile, leerzeichen);
-            write(zeile, "watch_running: " & var4);
-            write(zeile, leerzeichen);
-            write(zeile, "watch_reset: " & var5);
-            write(zeile, leerzeichen);
-            write(zeile, "Expected watch_running: " & expected1);
-            write(zeile, leerzeichen);
-            write(zeile, "Expected watch_reset: " & expected2);
-            write(zeile, leerzeichen);
-            write(zeile, "Time: ");
-            write(zeile, simulationszeit);
-            writeline(protokoll, zeile);
+            simulation_time := now;
+            write(var_line, "btn_toggle: " & var1);
+            write(var_line, whitespace);
+            write(var_line, "btn_reset: " & var2);
+            write(var_line, whitespace);
+            write(var_line, "sys_reset: " & var3);
+            write(var_line, whitespace);
+            write(var_line, "watch_running: " & var4);
+            write(var_line, whitespace);
+            write(var_line, "watch_reset: " & var5);
+            write(var_line, whitespace);
+            write(var_line, "Expected watch_running: " & expected1);
+            write(var_line, whitespace);
+            write(var_line, "Expected watch_reset: " & expected2);
+            write(var_line, whitespace);
+            write(var_line, "Time: ");
+            write(var_line, simulation_time);
+            writeline(protocol, var_line);
         END IF;
     END IF;     
 END PROCESS MONITOR;
