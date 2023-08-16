@@ -100,8 +100,8 @@ begin
                 else
                     next_state <= s_reset;
                 end if;
-            when OTHERS =>
-                REPORT "Invalid state" SEVERITY failure;
+            when others =>
+                report "Invalid state" severity failure;
         end case;
     end process transition;
 
