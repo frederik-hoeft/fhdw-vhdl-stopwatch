@@ -65,7 +65,7 @@ begin
                 end if;
             -- "start" <=> 10, 00 => 010, 10|11|01 => 001
             when s_start =>
-                if (btn_toggle_sff2 = '0') AND (btn_reset_sff2 = '0') then
+                if (btn_toggle_sff2 = '0') and (btn_reset_sff2 = '0') then
                     next_state <= s_running;
                 else
                     next_state <= s_start;
@@ -79,7 +79,7 @@ begin
                 end if;
             -- "stop" <=> 00, 00 => 100, 10|11|01 => 011
             when s_stop =>
-                if (btn_toggle_sff2 = '0') AND (btn_reset_sff2 = '0') then
+                if (btn_toggle_sff2 = '0') and (btn_reset_sff2 = '0') then
                     next_state <= s_stopped;
                 else
                     next_state <= s_stop;
@@ -88,14 +88,14 @@ begin
             when s_stopped =>
                 if (btn_toggle_sff2 = '1') then
                     next_state <= s_start;
-                ELSIF (btn_reset_sff2 = '1') then
+                elsif (btn_reset_sff2 = '1') then
                     next_state <= s_reset;
                 else
                     next_state <= s_stopped;
                 end if;
             -- "reset" <=> 01, 00 => 000, 01|11|10 => 101
             when s_reset =>
-                if (btn_reset_sff2 = '0') AND (btn_toggle_sff2 = '0') then
+                if (btn_reset_sff2 = '0') and (btn_toggle_sff2 = '0') then
                     next_state <= s_zero;
                 else
                     next_state <= s_reset;
@@ -114,7 +114,7 @@ begin
         else
             watch_reset <= '0';
         end if;
-        if (state = s_start) OR (state = s_running) then
+        if (state = s_start) or (state = s_running) then
             watch_running <= '1';
         else 
             watch_running <= '0';
