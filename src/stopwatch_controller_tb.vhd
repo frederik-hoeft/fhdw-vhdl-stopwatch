@@ -3,13 +3,13 @@
 ---------------------------------------------------------------
 
 LIBRARY IEEE;
-USE IEEE.std_logic_1164.ALL;
-USE STD.TEXTIO.ALL;
-USE ieee.numeric_std.ALL;
+use IEEE.std_logic_1164.ALL;
+use STD.TEXTIO.ALL;
+use ieee.numeric_std.ALL;
 
-ENTITY stopwatch_controller_tbv IS
+entity stopwatch_controller_tbv IS
 -- Leere Portliste, Test-Bench hat keine Schnittstellen!
-END stopwatch_controller_tbv;
+end stopwatch_controller_tbv;
 
 ARCHITECTURE test_bench OF stopwatch_controller_tbv IS
 -- Component Declaration FOR the Unit Under Test (UUT)
@@ -17,7 +17,7 @@ COMPONENT stopwatch_controller
 PORT(clk,btn_toggle,btn_reset,sys_reset : IN std_logic;
     watch_reset : OUT std_logic;
     watch_running : OUT std_logic);
-END COMPONENT;
+end COMPONENT;
 
 --Inputs
 SIGNAL clk: std_logic := '0';
@@ -34,8 +34,8 @@ SIGNAL DebugVariable : boolean:=true;
 --=============================================================
 --Functions
 FUNCTION char2std_logic (ch: IN character) RETURN std_logic IS
-BEGIN
-    CASE ch IS
+begin
+    case ch IS
         WHEN 'U' | 'u' => RETURN 'U';
         WHEN 'X' | 'x' => RETURN 'X';
         WHEN '0' => RETURN '0';
@@ -50,23 +50,23 @@ BEGIN
         REPORT "Illegal Character found" & ch
         SEVERITY error;
     RETURN 'U';
-    END CASE;
-END;
+    end case;
+end;
 
 FUNCTION string2std_logic (s: string) RETURN std_logic_vector IS
 VARIABLE vector: std_logic_vector(s'LEFT - 1 DOWNTO 0);
-BEGIN
+begin
     FOR i IN s'RANGE LOOP
         vector(i-1) := char2std_logic(s(i));
-    END LOOP;
+    end LOOP;
     RETURN vector;
-END;
+end;
 
 -- converts std_logic into a character
 FUNCTION std_logic2char(sl: std_logic) RETURN character IS
         VARIABLE c: character;
-        BEGIN
-            CASE sl IS
+        begin
+            case sl IS
                  WHEN 'U' => c:= 'U';
                  WHEN 'X' => c:= 'X';
                  WHEN '0' => c:= '0';
@@ -76,27 +76,27 @@ FUNCTION std_logic2char(sl: std_logic) RETURN character IS
                  WHEN 'L' => c:= 'L';
                  WHEN 'H' => c:= 'H';
                  WHEN '-' => c:= '-';
-            END CASE;
+            end case;
         RETURN c;
-     END std_logic2char;
+     end std_logic2char;
 
 FUNCTION std_logic2string(slv: std_logic_vector) RETURN string IS
     VARIABLE result : string (1 TO slv'LENGTH);
     VARIABLE r : integer;
-BEGIN
+begin
     r := 1;
     FOR i IN slv'RANGE LOOP
         result(r) := std_logic2char(slv(i));
         r := r + 1;
-    END LOOP;
+    end LOOP;
     RETURN result;
-END std_logic2string;
+end std_logic2string;
 
 SHARED VARIABLE expected1 : string(1 DOWNTO 1);
 SHARED VARIABLE expected2 : string(1 DOWNTO 1);
 
 -- Testbench
-BEGIN
+begin
 -- Taktgenerator
 clk <= NOT clk AFTER 50 ns;
 
@@ -109,10 +109,10 @@ STIMULI: PROCESS(clk)
     VARIABLE var1: string(1 DOWNTO 1);
     VARIABLE var2: string(1 DOWNTO 1);
     VARIABLE var3: string(1 DOWNTO 1);
-BEGIN
+begin
     ASSERT DebugVariable REPORT "STIMULI" SEVERITY note;
-    IF(clk'EVENT AND clk = '1') THEN
-        IF(NOT endfile(testpattern)) THEN
+    if(clk'EVENT AND clk = '1') THEN
+        if(NOT endfile(testpattern)) THEN
             readline(testpattern, var_line);
             read(var_line, var1);
             btn_toggle <= string2std_logic(var1);
@@ -127,9 +127,9 @@ BEGIN
             btn_toggle <= "0";
             btn_reset <= "0";
             sys_reset <= "1";
-        END IF;
-    END IF;
-END PROCESS STIMULI;
+        end if;
+    end if;
+end PROCESS STIMULI;
 
 RESPONSE: PROCESS(clk)
     FILE comparison_pattern: text OPEN READ_MODE IS "stopwatch_controller-outputs.txt";
@@ -137,11 +137,11 @@ RESPONSE: PROCESS(clk)
     VARIABLE whitespace: character;
     VARIABLE var1: string(1 DOWNTO 1);
     VARIABLE var2: string(1 DOWNTO 1);
-BEGIN
+begin
     ASSERT DebugVariable REPORT "EXPECTED" SEVERITY note;
-    IF(clk'EVENT AND clk = '1') THEN
-        IF(now > 100 ns) THEN
-            IF(NOT endfile(comparison_pattern)) THEN
+    if(clk'EVENT AND clk = '1') THEN
+        if(now > 100 ns) THEN
+            if(NOT endfile(comparison_pattern)) THEN
                 readline(comparison_pattern, var_line);
                 read(var_line, var1);
                 read(var_line, whitespace);
@@ -157,11 +157,11 @@ BEGIN
             ELSE 
                 expected1 := (others => 'X');
                 expected2 := (others => 'X');
-            END IF;
-        END IF;
-    END IF;
+            end if;
+        end if;
+    end if;
     --out2 <= StSpKnopf * ReKnopf;
-END PROCESS RESPONSE;
+end PROCESS RESPONSE;
 
 MONITOR: PROCESS(clk)
     FILE protocol: text OPEN WRITE_MODE IS "stopwatch_controller-test.log";
@@ -173,10 +173,10 @@ MONITOR: PROCESS(clk)
     VARIABLE var4: string(1 DOWNTO 1);
     VARIABLE var5: string(1 DOWNTO 1);
     VARIABLE simulation_time: time;
-BEGIN
+begin
     ASSERT DebugVariable REPORT "MONITOR" SEVERITY note;
-    IF(now > 100 ns) THEN
-        IF(clk'EVENT AND clk = '1') THEN
+    if(now > 100 ns) THEN
+        if(clk'EVENT AND clk = '1') THEN
             var1 := std_logic2string(btn_toggle);
             var2 := std_logic2string(btn_reset);
             var3 := std_logic2string(sys_reset);
@@ -200,8 +200,8 @@ BEGIN
             write(var_line, "Time: ");
             write(var_line, simulation_time);
             writeline(protocol, var_line);
-        END IF;
-    END IF;     
-END PROCESS MONITOR;
+        end if;
+    end if;     
+end PROCESS MONITOR;
 
-END test_bench;
+end test_bench;
