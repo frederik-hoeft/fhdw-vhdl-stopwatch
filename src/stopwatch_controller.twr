@@ -45,9 +45,9 @@ Setup/Hold to clock clk
             |Max Setup to|Max Hold to |                  | Clock  |
 Source      | clk (edge) | clk (edge) |Internal Clock(s) | Phase  |
 ------------+------------+------------+------------------+--------+
-btn_reset   |    2.464(R)|    0.719(R)|clk_BUFGP         |   0.000|
-btn_toggle  |    3.621(R)|    0.525(R)|clk_BUFGP         |   0.000|
-sys_reset   |    4.005(R)|    1.105(R)|clk_BUFGP         |   0.000|
+btn_reset   |   -0.220(R)|    1.720(R)|clk_BUFGP         |   0.000|
+btn_toggle  |    0.125(R)|    1.441(R)|clk_BUFGP         |   0.000|
+sys_reset   |    0.375(R)|    1.241(R)|clk_BUFGP         |   0.000|
 ------------+------------+------------+------------------+--------+
 
 Clock clk to Pad
@@ -55,8 +55,8 @@ Clock clk to Pad
              | clk (edge) |                  | Clock  |
 Destination  |   to PAD   |Internal Clock(s) | Phase  |
 -------------+------------+------------------+--------+
-watch_reset  |    7.806(R)|clk_BUFGP         |   0.000|
-watch_running|    9.737(R)|clk_BUFGP         |   0.000|
+watch_reset  |    7.794(R)|clk_BUFGP         |   0.000|
+watch_running|    8.844(R)|clk_BUFGP         |   0.000|
 -------------+------------+------------------+--------+
 
 Clock to Setup on destination clock clk
@@ -64,11 +64,11 @@ Clock to Setup on destination clock clk
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-clk            |    3.013|         |         |         |
+clk            |    3.161|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 
-Analysis completed Tue Aug 15 00:56:29 2023 
+Analysis completed Wed Aug 16 14:31:25 2023 
 --------------------------------------------------------------------------------
 
 Trace Settings:
