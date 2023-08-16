@@ -54,13 +54,25 @@ for (int i = 1; i < lines.Length; i++)
     inputWriter.WriteLine();
     if (i == lines.Length - 1)
     {
+        // add more (basically dummy) inputs to the end while waiting for
+        // input to output delay to complete tests
+        // metastability shift (2 FFs)
+        for (int j = 0; j < 2; j++)
+        {
+            inputWriter.Write(processedInputWords);
+            inputWriter.WriteLine();
+        }
+        // base delay
         inputWriter.Write(processedInputWords);
     }
 
     List<string> outputWords = GetColumnsRegex().Split(outputs).ToList();
     string processedOutputWords = string.Join(' ', outputWords);
-    if (i is 1)
+    for (int j = 0; i == 1 && j < 3; j++)
     {
+        // add more (basically dummy) outputs to the start while waiting for
+        // input to output delay to start tests
+        // metastability shift (2 FFs) + base delay
         outputWriter.Write(processedOutputWords);
         outputWriter.WriteLine();
     }
