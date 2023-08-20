@@ -1,8 +1,30 @@
-# fhdw-vhdl-stopwatch
-An embedded systems project for college.
+# VHDL Stoppuhr
+Dieses Dokument dient als Übersicht der erbrachten Leistungen innerhalb des VHDL-Projektes.
 
-## Test Preprocessor
-Um die Implementierung des Stoppuhr-Automaten möglichst angenehm zu testen, wurde ein C\#/.NET Programm erstellt, welches annotierte CSV Dateien in TXT Dateien umwandelt. Dies ermöglicht es mithilfe von CSV kompatiblen Editoren (wie Microsoft Excel) Testdaten anzulegen und mit Notizen zu versehen, was die Daten auch für Dritte einsichtiger macht. Die Testdaten werden dann ohne die Kommentare in TXT Dateien kopiert, in denen sie so aufbereitet werden, dass sie für das Testframework genutzt werden können.
+## Implementation des Stoppuhr-Controllers
+Der Stoppuhr-Controller wurde als Automat in VDL implementiert. Die Zustände und die Zustandsübergänge des Automaten werden in der folgenden Abbildung veranschaulicht.
+![](./assets/images/stopwatch-automaton.png)
+
+Wie dargestellt sind die Zustandsübergänge primär von zwei Knöpfen abhängig:
+- Button 1 = Start/Stopp (High-active)
+- Button 2 = Reset (High-active)
+
+Es gibt jedoch auch einen dritten Knopf, welcher einen System-Reset auslöst und damit direkt in Zustand "zero" führt:
+- Button 3 = System-Reset (Low-active)
+
+Um die Metastabilität zu berücksichtigen, wurden vor jeden Input (Start/Stopp, Reset, System-Reset) jeweils zwei Synchronisations-Flipflops in Reihe geschaltet, die durch einen Prozess verwaltet werden.
+
+Die Ausgänge der Zustände lauten wie folgt:
+- Output 1 = Watch running (High-active)
+- Output 2 = Watch reset (High-active)
+
+### Testabdeckung
+Die zur Verfügung gestellte Testbench wurde in das Projekt eingebunden und für alle Tests benutzt.
+Die Testabdeckung liegt bei 100%. Es wurden alle Zuständsübergänge, inklusive der System Resets getestet.
+
+
+## Selbstentwickelter Test-Preprocessor
+Um die Tests des Stoppuhr-Controllers möglichst angenehm zu gestalten, wurde ein C\#/.NET Programm erstellt, welches annotierte CSV Dateien in TXT Dateien umwandelt. Dies ermöglicht es mithilfe von CSV kompatiblen Editoren (wie Microsoft Excel) Testdaten anzulegen und mit Notizen zu versehen, was die Daten auch für Dritte einsichtiger macht. Die Testdaten werden dann ohne die Kommentare in TXT Dateien kopiert, in denen sie so aufbereitet werden, dass sie für das Testframework genutzt werden können.
 
 ### CSV Struktur
 Damit das C\#-Programm die Testdaten verarbeiten kann, wird der Aufbau der CSV Datei wie folgt vorgeschrieben:
