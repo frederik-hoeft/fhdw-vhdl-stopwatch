@@ -2,28 +2,9 @@ Command line:
    stopwatch_controller_tbv_isim_beh.exe
      -simmode  gui
      -simrunnum  0
-     -socket  43673
+     -socket  52083
 
-Wed Aug 16 14:31:45 2023
+Sun Aug 20 20:32:18 2023
 
 
- Elaboration Time: 0 sec
-
- Current Memory Usage: 183.738 Meg
-
- Total Signals          : 21
- Total Nets             : 15
- Total Signal Drivers   : 14
- Total Blocks           : 5
- Total Primitive Blocks : 4
- Total Processes        : 8
- Total Traceable Variables  : 15
- Total Scalar Nets and Variables : 500
-Total Line Count : 94
-
- Total Simulation Time: 0.16 sec
-
- Current Memory Usage: 259.24 Meg
-
-Wed Aug 16 14:35:57 2023
-
+ Elaboration Time: 0.02 sec

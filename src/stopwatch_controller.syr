@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.03 secs
+Total CPU time to Xst completion: 0.04 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.03 secs
+Total CPU time to Xst completion: 0.04 secs
  
 --> 
 Reading design: stopwatch_controller.prj
@@ -108,8 +108,7 @@ Slice Utilization Ratio Delta      : 5
 *                          HDL Compilation                              *
 =========================================================================
 Compiling vhdl file "/home/dev/projects/es4/fhdw-vhdl-stopwatch/src/stopwatch_controller.vhd" in Library work.
-Entity <stopwatch_controller> compiled.
-Entity <stopwatch_controller> (Architecture <behavioral>) compiled.
+Architecture behavioral of Entity stopwatch_controller is up to date.
 
 =========================================================================
 *                     Design Hierarchy Analysis                         *
@@ -368,13 +367,13 @@ Offset:              5.693ns (Levels of Logic = 2)
 =========================================================================
 
 
-Total REAL time to Xst completion: 3.00 secs
-Total CPU time to Xst completion: 2.61 secs
+Total REAL time to Xst completion: 4.00 secs
+Total CPU time to Xst completion: 2.84 secs
  
 --> 
 
 
-Total memory usage is 499260 kilobytes
+Total memory usage is 499264 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    0 (   0 filtered)

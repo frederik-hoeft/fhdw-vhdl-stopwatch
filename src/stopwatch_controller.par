@@ -1,7 +1,7 @@
 Release 14.7 par P.20131013 (lin64)
 Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 
-XEON-debian::  Wed Aug 16 14:31:17 2023
+XEON-debian::  Sun Aug 20 20:31:44 2023
 
 par -w -intstyle ise -ol high -t 1 stopwatch_controller_map.ncd
 stopwatch_controller.ncd stopwatch_controller.pcf 
@@ -112,23 +112,23 @@ Phase  2  : 49 unrouted;      REAL time: 5 secs
 
 Phase  3  : 5 unrouted;      REAL time: 5 secs 
 
-Phase  4  : 7 unrouted; (Par is working to improve performance)     REAL time: 5 secs 
+Phase  4  : 7 unrouted; (Par is working to improve performance)     REAL time: 6 secs 
 
-Phase  5  : 0 unrouted; (Par is working to improve performance)     REAL time: 5 secs 
+Phase  5  : 0 unrouted; (Par is working to improve performance)     REAL time: 6 secs 
 
 Updating file: stopwatch_controller.ncd with current fully routed design.
 
-Phase  6  : 0 unrouted; (Par is working to improve performance)     REAL time: 5 secs 
+Phase  6  : 0 unrouted; (Par is working to improve performance)     REAL time: 6 secs 
 
-Phase  7  : 0 unrouted; (Par is working to improve performance)     REAL time: 5 secs 
+Phase  7  : 0 unrouted; (Par is working to improve performance)     REAL time: 6 secs 
 
-Phase  8  : 0 unrouted; (Par is working to improve performance)     REAL time: 5 secs 
+Phase  8  : 0 unrouted; (Par is working to improve performance)     REAL time: 6 secs 
 
-Phase  9  : 0 unrouted; (Par is working to improve performance)     REAL time: 5 secs 
+Phase  9  : 0 unrouted; (Par is working to improve performance)     REAL time: 6 secs 
 
-Phase 10  : 0 unrouted; (Par is working to improve performance)     REAL time: 5 secs 
+Phase 10  : 0 unrouted; (Par is working to improve performance)     REAL time: 6 secs 
 
-Total REAL time to Router completion: 5 secs 
+Total REAL time to Router completion: 6 secs 
 Total CPU time to Router completion: 5 secs 
 
 Partition Implementation Status
